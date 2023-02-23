@@ -1,37 +1,31 @@
 package com.acme.jpa;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.acme.jpa.entities.production.Brand;
 import com.acme.jpa.entities.production.Category;
 import com.acme.jpa.entities.production.Product;
 import com.acme.jpa.repository.BrandRepository;
 import com.acme.jpa.repository.CategoryRepository;
 import com.acme.jpa.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.math.BigDecimal;
+import java.util.List;
 
 public class Tutorial {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    
-    private EntityManagerFactory emf;
 
-    private CategoryRepository categoryRepository;
-    private BrandRepository brandRepository;
-    private ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final BrandRepository brandRepository;
+    private final ProductRepository productRepository;
     
     public Tutorial() {
         logger.info("Inicio Tutorial..");
 
-        emf = Persistence.createEntityManagerFactory("PU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU");
         
         categoryRepository = new CategoryRepository(emf);
         brandRepository = new BrandRepository(emf);
@@ -55,7 +49,7 @@ public class Tutorial {
       
         List<Product> productList = productRepository.findByBrandAndCategory(brand, category);
 //        productList.forEach(System.out::println);
-        productList.forEach(p -> {logger.info(p.toString());});
+        productList.forEach(p -> logger.info(p.toString()));
     }
 
     private void createProducts() {
@@ -66,7 +60,7 @@ public class Tutorial {
         product.setBrand(brandRepository.findByName("BMW"));
         product.setName("330d");
         product.setModelYear((short) 2023);
-        product.setListPrice(new BigDecimal(55000.0));
+        product.setListPrice(new BigDecimal("55000.0"));
         productRepository.save(product);
         
         
@@ -75,7 +69,7 @@ public class Tutorial {
         product1.setBrand(brandRepository.findByName("BMW"));
         product1.setName("530I");
         product1.setModelYear((short) 2021);
-        product1.setListPrice(new BigDecimal(67599.0));
+        product1.setListPrice(new BigDecimal("67599.0"));
         productRepository.save(product1);
         
         
@@ -84,7 +78,7 @@ public class Tutorial {
         product2.setBrand(brandRepository.findByName("MERCEDES"));
         product2.setName("A180d");
         product2.setModelYear((short) 2023);
-        product2.setListPrice(new BigDecimal(39000.0));
+        product2.setListPrice(new BigDecimal("39000.0"));
         productRepository.save(product2);
         
         
@@ -93,7 +87,7 @@ public class Tutorial {
         product3.setBrand(brandRepository.findByName("MERCEDES"));
         product3.setName("C220");
         product3.setModelYear((short) 2021);
-        product3.setListPrice(new BigDecimal(69999.0));
+        product3.setListPrice(new BigDecimal("69999.0"));
         productRepository.save(product3);
     }
 
